@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signature Resize to 10KB</title>
+<title>Signature Resize Tool</title>
 
 <style>
 body{
@@ -29,9 +29,10 @@ button{
   color:white;
   border:none;
 }
-img{
-  max-width:100%;
-  margin-top:10px;
+.progress{
+  color:green;
+  font-weight:bold;
+  text-align:center;
 }
 </style>
 </head>
@@ -39,11 +40,16 @@ img{
 <body>
 
 <div class="container">
-<h2>Signature Resize to 10KB</h2>
+<h2>Signature Resize Tool</h2>
 
 <input type="file" id="upload" accept="image/*">
 
-<button onclick="compressSignature()">Convert to 10KB</button>
+<label>Target Size (KB)</label>
+<input type="number" id="targetSize" placeholder="Enter size e.g. 10">
+
+<button onclick="compressSignature()">Compress</button>
+
+<div class="progress" id="progressText"></div>
 
 <a id="downloadLink" style="display:none;">
 <button>Download Signature</button>
@@ -57,6 +63,8 @@ let selectedFile;
 
 document.getElementById("upload").addEventListener("change", function(e){
   selectedFile = e.target.files[0];
+  document.getElementById("progressText").innerText = "";
+  document.getElementById("downloadLink").style.display = "none";
 });
 
 function compressSignature(){
@@ -65,6 +73,10 @@ function compressSignature(){
     alert("Upload signature first");
     return;
   }
+
+  document.getElementById("progressText").innerText = "Compressing...";
+
+  let targetSize = document.getElementById("targetSize").value;
 
   let reader = new FileReader();
 
@@ -89,15 +101,18 @@ function compressSignature(){
         let dataUrl = canvas.toDataURL("image/jpeg", quality);
         let sizeKB = (dataUrl.length * 3/4)/1024;
 
-        if(sizeKB > 10 && quality > 0.1){
+        if(targetSize && sizeKB > targetSize && quality > 0.1){
           quality -= 0.05;
           compress();
         } else {
 
           const link = document.getElementById("downloadLink");
           link.href = dataUrl;
-          link.download = "signature_10kb.jpg";
+          link.download = "signature.jpg";
           link.style.display = "block";
+
+          document.getElementById("progressText").innerText =
+          "Compression Complete ✅";
         }
       }
 

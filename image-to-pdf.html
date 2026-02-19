@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convert Images to PDF Online Free - Multiple Image to PDF Tool</title>
+
+<meta name="description" content="Convert multiple images to a single PDF file online for free. Fast, secure and easy image to PDF converter tool.">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+body{
+  font-family: Arial;
+  background:#f2f4f7;
+  padding:20px;
+}
+.container{
+  max-width:400px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+h2{
+  text-align:center;
+}
+input,button{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+button{
+  background:#0d6efd;
+  color:white;
+  border:none;
+  font-weight:bold;
+}
+.progress{
+  text-align:center;
+  color:green;
+  font-weight:bold;
+}
+.info{
+  font-size:13px;
+  text-align:center;
+  margin-top:10px;
+  color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Image to PDF Converter</h2>
+
+<input type="file" id="upload" accept="image/*" multiple>
+
+<button onclick="convertToPDF()">Convert to PDF</button>
+
+<div class="progress" id="progressText"></div>
+
+<div class="info">
+You can select multiple images. Each image will be added as a new page in the PDF.
+</div>
+
+</div>
+
+<script>
+
+let selectedFiles = [];
+
+document.getElementById("upload").addEventListener("change", function(e){
+  selectedFiles = e.target.files;
+  document.getElementById("progressText").innerText = "";
+});
+
+async function convertToPDF(){
+
+  if(selectedFiles.length === 0){
+    alert("Upload at least one image");
+    return;
+  }
+
+  document.getElementById("progressText").innerText = "Creating PDF...";
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF();
+
+  for(let i = 0; i < selectedFiles.length; i++){
+
+    const file = selectedFiles[i];
+    const reader = new FileReader();
+
+    await new Promise((resolve) => {
+
+      reader.onload = function(event){
+
+        let img = new Image();
+        img.src = event.target.result;
+
+        img.onload = function(){
+
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (img.height * pdfWidth) / img.width;
+
+          if(i !== 0){
+            pdf.addPage();
+          }
+
+          pdf.addImage(img, "JPEG", 0, 0, pdfWidth, pdfHeight);
+          resolve();
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+  pdf.save("images.pdf");
+
+  document.getElementById("progressText").innerText =
+  "PDF Downloaded Successfully ✅";
+}
+
+</script>
+
+</body>
+  </html>

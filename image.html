@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compress Image in KB Online - Free Image Compressor</title>
+<title>Compress Image to 20KB, 30KB, 40KB, 50KB Online Free</title>
 
-<meta name="description" content="Compress image in KB online for free. Reduce image size without losing quality. Perfect for SSC, Banking and exam form uploads.">
+<meta name="description" content="Compress image to 20KB, 30KB, 40KB or 50KB online free. Reduce photo size for SSC, banking and exam forms instantly without losing quality. 100% free and fast tool.">
 
 <link rel="canonical" href="https://freephotoresizer.vercel.app/image.html">
 
@@ -48,27 +48,43 @@ section{
 max-width:800px;
 margin:40px auto;
 }
+.preset-buttons button{
+width:48%;
+margin:5px 1%;
+background:#198754;
+}
 </style>
 
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
  "@type": "FAQPage",
- "mainEntity": [{
+ "mainEntity": [
+ {
    "@type": "Question",
-   "name": "How to compress image in KB?",
+   "name": "How to compress image to 20KB or 50KB?",
    "acceptedAnswer": {
      "@type": "Answer",
-     "text": "Upload your image, enter target size in KB and click compress. Download instantly."
+     "text": "Upload your image, select 20KB, 30KB, 40KB or 50KB or enter custom size and click compress. Download instantly."
    }
- },{
+ },
+ {
    "@type": "Question",
-   "name": "Does compression reduce quality?",
+   "name": "Can I compress image for SSC and exam forms?",
    "acceptedAnswer": {
      "@type": "Answer",
-     "text": "You can control compression level. The tool maintains best possible quality."
+     "text": "Yes, this tool is specially designed for SSC, banking, railway and other government exam form image requirements."
    }
- }]
+ },
+ {
+   "@type": "Question",
+   "name": "Will image quality reduce after compression?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "The tool reduces size while maintaining best possible quality suitable for uploads."
+   }
+ }
+ ]
 }
 </script>
 
@@ -76,7 +92,7 @@ margin:40px auto;
 
 <body>
 
-<h1 style="text-align:center;">Compress Image in KB Online</h1>
+<h1 style="text-align:center;">Compress Image to 20KB, 30KB, 40KB, 50KB</h1>
 
 <div class="container">
 
@@ -87,6 +103,14 @@ margin:40px auto;
 <label>Target Size (KB)</label>
 <input type="number" id="targetSize" placeholder="Enter size e.g. 50">
 
+<!-- ✅ Preset Buttons -->
+<div class="preset-buttons">
+<button onclick="setSize(20)">20 KB</button>
+<button onclick="setSize(30)">30 KB</button>
+<button onclick="setSize(40)">40 KB</button>
+<button onclick="setSize(50)">50 KB</button>
+</div>
+
 <button onclick="compressImage()">Compress Image</button>
 
 <a id="downloadLink" style="display:none;">
@@ -96,22 +120,25 @@ margin:40px auto;
 </div>
 
 <section>
-<h2>About Image Compressor</h2>
+<h2>About Image Compressor Tool</h2>
 <p>
-This free image compressor helps you reduce image file size in KB without losing quality. 
-It is ideal for SSC forms, banking exams, railway applications and other government uploads.
-Simply upload your image, set the target size and download instantly.
+This free image compressor allows you to compress image to exact sizes like 20KB, 30KB, 40KB and 50KB online.
+It is perfect for SSC, banking, railway and other government exam forms where image size limits are required.
+Upload your image, choose target size and download instantly without watermark.
 </p>
 </section>
 
 <section>
 <h2>Frequently Asked Questions</h2>
 
-<h3>How to compress image in KB?</h3>
-<p>Upload image, enter target size and click compress.</p>
+<h3>How to compress image to 20KB?</h3>
+<p>Upload image, select 20KB or enter custom size and click compress to download instantly.</p>
 
-<h3>Is this tool free?</h3>
-<p>Yes, it is 100% free and works directly in your browser.</p>
+<h3>Is this tool free to use?</h3>
+<p>Yes, it is 100% free and works directly in your browser without signup.</p>
+
+<h3>Can I use it for SSC and banking forms?</h3>
+<p>Yes, it is specially designed for exam form image size requirements.</p>
 
 </section>
 
@@ -138,6 +165,10 @@ document.getElementById("preview").style.display = "block";
 };
 reader.readAsDataURL(selectedFile);
 });
+
+function setSize(kb){
+document.getElementById("targetSize").value = kb;
+}
 
 function compressImage(){
 
@@ -173,7 +204,7 @@ let sizeKB = (dataUrl.length * 3/4)/1024;
 
 if(targetSize && sizeKB > targetSize && quality > 0.1){
 quality -= 0.05;
-compress();
+requestAnimationFrame(compress);
 } else {
 
 const link = document.getElementById("downloadLink");
@@ -197,4 +228,4 @@ reader.readAsDataURL(selectedFile);
 </script>
 
 </body>
-</html>
+ </html>

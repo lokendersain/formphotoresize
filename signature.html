@@ -63,6 +63,40 @@ background:#198754;
 }
 </style>
 
+<!-- ✅ FAQ SCHEMA -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+ {
+   "@type": "Question",
+   "name": "How to resize signature to 20KB online?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Upload your signature, select 20KB or enter custom size and download instantly."
+   }
+ },
+ {
+   "@type": "Question",
+   "name": "Can I resize signature for SSC and banking exams?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Yes, this tool is specially designed for SSC, banking, railway and NTPC exam forms."
+   }
+ },
+ {
+   "@type": "Question",
+   "name": "Is this signature resizer free?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Yes, it is completely free and works directly in your browser."
+   }
+ }
+ ]
+}
+</script>
+
 </head>
 
 <body>
@@ -94,6 +128,50 @@ background:#198754;
 </a>
 
 </div>
+
+<!-- 🔥 SEO CONTENT -->
+
+<section>
+<h2>Resize Signature Online for SSC, Banking & NTPC Exams</h2>
+
+<p>
+This free online signature resizer helps you resize signature to exact sizes like 20KB, 30KB, 40KB and 50KB instantly.
+It is specially designed for SSC, banking, railway and other government exam forms where signature size is required.
+</p>
+
+<p>
+If your signature is not uploading due to size issues, you can easily reduce file size without losing clarity.
+The tool works directly in your browser and does not upload your data anywhere.
+</p>
+
+<p>
+Whether you need 20KB signature for SSC or 50KB for banking exams, this tool provides fast and accurate results.
+</p>
+
+</section>
+
+<section>
+<h2>Frequently Asked Questions</h2>
+
+<h3>How to resize signature to 20KB?</h3>
+<p>Upload your signature, select 20KB or enter custom size and click resize.</p>
+
+<h3>Can I resize signature for SSC forms?</h3>
+<p>Yes, this tool is perfect for SSC, banking and other government exam forms.</p>
+
+<h3>Is this tool free?</h3>
+<p>Yes, it is completely free and works online.</p>
+
+</section>
+
+<section style="text-align:center;">
+<p>
+Try other tools:
+<a href="image.html">Image Compressor</a> |
+<a href="resize.html">Image Resizer</a> |
+<a href="image-to-pdf.html">Image to PDF</a>
+</p>
+</section>
 
 <script>
 
@@ -146,7 +224,6 @@ canvas.height = height;
 
 ctx.drawImage(img,0,0,width,height);
 
-// 🔥 binary search compression
 let min = 0.1;
 let max = 1;
 let bestDataUrl;
@@ -171,7 +248,6 @@ bestDataUrl = dataUrl;
 
 }
 
-// 🔥 fallback resolution reduce
 let finalData = bestDataUrl;
 let finalSize = getSize(finalData);
 

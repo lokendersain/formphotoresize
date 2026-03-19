@@ -63,39 +63,6 @@ background:#198754;
 }
 </style>
 
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "FAQPage",
- "mainEntity": [
- {
-   "@type": "Question",
-   "name": "How to resize signature to 20KB or 50KB?",
-   "acceptedAnswer": {
-     "@type": "Answer",
-     "text": "Upload your signature, select 20KB, 30KB, 40KB or 50KB or enter custom size and download instantly."
-   }
- },
- {
-   "@type": "Question",
-   "name": "Is this tool suitable for SSC, Banking and NTPC exams?",
-   "acceptedAnswer": {
-     "@type": "Answer",
-     "text": "Yes, this tool is specially designed for government exam forms including SSC, Banking, Railway and NTPC."
-   }
- },
- {
-   "@type": "Question",
-   "name": "Will signature quality reduce?",
-   "acceptedAnswer": {
-     "@type": "Answer",
-     "text": "The tool maintains best possible clarity while reducing file size for exam uploads."
-   }
- }
- ]
-}
-</script>
-
 </head>
 
 <body>
@@ -111,7 +78,6 @@ background:#198754;
 <label>Target Size (KB)</label>
 <input type="number" id="targetSize" placeholder="Enter 20, 30, 40 or 50">
 
-<!-- ✅ Preset Buttons -->
 <div class="preset-buttons">
 <button onclick="setSize(20)">20 KB</button>
 <button onclick="setSize(30)">30 KB</button>
@@ -128,48 +94,6 @@ background:#198754;
 </a>
 
 </div>
-
-<section>
-<h2>Resize Signature Online for SSC, Banking & NTPC Exams</h2>
-
-<p>
-This free signature resizer allows you to resize signature to exact sizes like 20KB, 30KB, 40KB and 50KB for SSC, banking and other government exam forms.
-Uploading incorrect signature size can cause form rejection, so using the correct KB size is important.
-</p>
-
-<p>
-Simply upload your signature image, choose your target size and download instantly.
-The tool works directly in your browser and does not upload your file anywhere.
-</p>
-
-<p>
-It is specially designed for students and job aspirants who need quick and accurate signature resizing for online applications.
-</p>
-
-</section>
-
-<section>
-<h2>Frequently Asked Questions</h2>
-
-<h3>How to resize signature to 20KB?</h3>
-<p>Upload your signature, select 20KB or enter custom size and click resize.</p>
-
-<h3>Can I resize signature to 50KB?</h3>
-<p>Yes, you can use preset buttons or manually enter size.</p>
-
-<h3>Is this tool free?</h3>
-<p>Yes, it is completely free and works instantly online.</p>
-
-</section>
-
-<section style="text-align:center;">
-<p>
-Try other tools:
-<a href="image.html">Image Compressor</a> |
-<a href="resize.html">Image Resizer</a> |
-<a href="image-to-pdf.html">Image to PDF</a>
-</p>
-</section>
 
 <script>
 
@@ -214,33 +138,63 @@ img.onload = function(){
 let canvas = document.createElement("canvas");
 let ctx = canvas.getContext("2d");
 
-canvas.width = img.width;
-canvas.height = img.height;
+let width = img.width;
+let height = img.height;
 
-ctx.drawImage(img,0,0);
+canvas.width = width;
+canvas.height = height;
 
-let quality = 0.9;
+ctx.drawImage(img,0,0,width,height);
 
-function compress(){
-let dataUrl = canvas.toDataURL("image/jpeg", quality);
-let sizeKB = (dataUrl.length * 3/4)/1024;
+// 🔥 binary search compression
+let min = 0.1;
+let max = 1;
+let bestDataUrl;
 
-if(targetSize && sizeKB > targetSize && quality > 0.1){
-quality -= 0.05;
-requestAnimationFrame(compress);
+function getSize(dataUrl){
+return (dataUrl.length * 3/4)/1024;
+}
+
+for(let i=0;i<15;i++){
+
+let mid = (min + max) / 2;
+
+let dataUrl = canvas.toDataURL("image/jpeg", mid);
+let size = getSize(dataUrl);
+
+if(size > targetSize){
+max = mid;
 } else {
+min = mid;
+bestDataUrl = dataUrl;
+}
+
+}
+
+// 🔥 fallback resolution reduce
+let finalData = bestDataUrl;
+let finalSize = getSize(finalData);
+
+if(finalSize > targetSize){
+
+width *= 0.9;
+height *= 0.9;
+
+canvas.width = width;
+canvas.height = height;
+
+ctx.drawImage(img,0,0,width,height);
+
+finalData = canvas.toDataURL("image/jpeg", 0.7);
+
+}
 
 document.getElementById("loading").style.display = "none";
 
 const link = document.getElementById("downloadLink");
-link.href = dataUrl;
+link.href = finalData;
 link.download = "signature.jpg";
 link.style.display = "block";
-
-}
-}
-
-compress();
 
 }
 
@@ -253,4 +207,4 @@ reader.readAsDataURL(selectedFile);
 </script>
 
 </body>
- </html>
+</html>
